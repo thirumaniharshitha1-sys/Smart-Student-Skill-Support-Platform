@@ -18,7 +18,7 @@ function App() {
 
   const fetchStudents = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/students");
+      const response = await axios.get("http://192.168.1.3:5000/students");
       setStudents(response.data);
     } catch (error) {
       console.log(error);
@@ -32,14 +32,14 @@ function App() {
   const handleSubmit = async () => {
     try {
       if (isEditing) {
-        await axios.put(
-          `http://localhost:5000/students/update/${editingId}`,
-          {
-            name,
-            email,
-            course,
-          }
-        );
+      await axios.put(
+  `http://192.168.1.3:5000/students/update/${editingId}`,
+  {
+    name,
+    email,
+    course,
+  }
+); 
 
         alert("Student Updated Successfully!");
 
@@ -57,7 +57,7 @@ if (!emailRegex.test(email)) {
   alert("Enter a valid email");
   return;
 }
-        await axios.post("http://localhost:5000/students/add", {
+       await axios.post("http://192.168.1.3:5000/students/add", {
           name,
           email,
           course,
@@ -88,7 +88,7 @@ if (!emailRegex.test(email)) {
 
   const deleteStudent = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/students/delete/${id}`);
+      await axios.delete(`http://192.168.1.3:5000/students/delete/${id}`);
 
       alert("Student Deleted Successfully!");
 
@@ -104,7 +104,7 @@ if (!emailRegex.test(email)) {
 
 const handleDelete = async (id) => {
   try {
-    await axios.delete(`http://localhost:5000/students/delete/${id}`);
+    await axios.delete(`http://192.168.1.3:5000/students/delete/${id}`);
     alert("Student Deleted Successfully!");
     fetchStudents();
   } catch (error) {

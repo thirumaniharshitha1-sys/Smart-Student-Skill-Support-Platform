@@ -112,3 +112,43 @@ table tr:hover {
 .logout-btn:hover {
   background-color: #f57c00;
 }
+
+/* Mobile Responsive Design */
+@media (max-width: 600px) {
+
+  .container {
+    width: 90%;
+    padding: 15px;
+    margin: 20px auto;
+  }
+
+  h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  button {
+    font-size: 14px;
+    padding: 9px 12px;
+  }
+
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  table th,
+  table td {
+    padding: 8px;
+  }
+
+  .logout-btn {
+    padding: 8px 12px;
+  }
+}

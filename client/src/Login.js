@@ -8,7 +8,7 @@ function Login({ onLogin }) {
   const handleLogin = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/auth/login",
+        "http://192.168.1.3:5000/auth/login",
         {
           email,
           password,
