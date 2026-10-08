@@ -5,6 +5,7 @@ function Login({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
 
   const [isRegistering, setIsRegistering] = useState(false);
   const [username, setUsername] = useState("");
@@ -19,7 +20,7 @@ function Login({ onLogin }) {
 
     try {
       const response = await axios.post(
-        "https://s4p-backend.onrender.com/auth/login",
+        "http://localhost:5000/auth/login",
         {
           email,
           password,
@@ -45,9 +46,35 @@ function Login({ onLogin }) {
       );
     } catch (error) {
       console.log(error);
+
       alert(
         error.response?.data?.message ||
           "Invalid Email or Password"
+      );
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    if (!email) {
+      alert("Please enter your registered email");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/auth/forgot-password",
+        {
+          email,
+        }
+      );
+
+      alert(response.data.message);
+    } catch (error) {
+      console.log(error);
+
+      alert(
+        error.response?.data?.message ||
+          "Unable to send password reset link"
       );
     }
   };
@@ -60,7 +87,7 @@ function Login({ onLogin }) {
 
     try {
       const response = await axios.post(
-        "https://s4p-backend.onrender.com/auth/register",
+        "http://localhost:5000/auth/register",
         {
           username,
           email,
@@ -80,6 +107,7 @@ function Login({ onLogin }) {
       setCourse("");
     } catch (error) {
       console.log(error);
+
       alert(
         error.response?.data?.message ||
           "Registration failed"
@@ -94,156 +122,230 @@ function Login({ onLogin }) {
 
       <div className="login-card">
 
-        <div className="login-icon">
-          🎓
-        </div>
+        {isForgotPassword ? (
+          <>
+            <div className="login-icon">
+              🔐
+            </div>
 
-        <div className="login-brand">
-          <h1>S4P</h1>
-          <span>Smart Student Skill & Support Platform</span>
-        </div>
+            <div className="login-brand">
+              <h1>S4P</h1>
+              <span>
+                Smart Student Skill & Support Platform
+              </span>
+            </div>
 
-        <div className="login-heading">
-          <h2>
-            {isRegistering
-              ? "Create Your Account"
-              : "Welcome Back"}
-          </h2>
+            <div className="login-heading">
+              <h2>Forgot Password?</h2>
 
-          <p>
-            {isRegistering
-              ? "Join S4P and start building your career roadmap."
-              : "Track your skills, goals and learning journey."}
-          </p>
-        </div>
+              <p>
+                Enter your registered email and we'll send
+                you a password reset link.
+              </p>
+            </div>
 
-        {isRegistering && (
-          <div className="login-field">
-            <label>Username</label>
+            <div className="login-field">
+              <label>Email</label>
 
-            <input
-              type="text"
-              placeholder="Enter your username"
-              value={username}
-              onChange={(e) =>
-                setUsername(e.target.value)
-              }
-            />
-          </div>
-        )}
-
-        <div className="login-field">
-          <label>Email</label>
-
-          <input
-            type="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) =>
-              setEmail(e.target.value)
-            }
-          />
-        </div>
-
-        {isRegistering && role === "student" && (
-          <div className="login-field">
-            <label>Course</label>
-
-            <input
-              type="text"
-              placeholder="Enter your course"
-              value={course}
-              onChange={(e) =>
-                setCourse(e.target.value)
-              }
-            />
-          </div>
-        )}
-
-        <div className="login-field">
-          <label>Password</label>
-
-          <div className="password-wrapper">
-            <input
-              type={
-                showPassword
-                  ? "text"
-                  : "password"
-              }
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) =>
-                setPassword(e.target.value)
-              }
-            />
+              <input
+                type="email"
+                placeholder="Enter your registered email"
+                value={email}
+                onChange={(e) =>
+                  setEmail(e.target.value)
+                }
+              />
+            </div>
 
             <button
-              type="button"
-              className="password-toggle"
-              onClick={() =>
-                setShowPassword(!showPassword)
-              }
+              className="login-main-button"
+              onClick={handleForgotPassword}
             >
-              {showPassword ? "🙈" : "👁️"}
+              Send Reset Link
             </button>
-          </div>
-        </div>
 
-        {isRegistering && (
-          <div className="login-field">
-            <label>Account Type</label>
+            <div className="login-switch">
+              <button
+                onClick={() =>
+                  setIsForgotPassword(false)
+                }
+              >
+                Back to Login
+              </button>
+            </div>
 
-            <select
-              value={role}
-              onChange={(e) =>
-                setRole(e.target.value)
+            <div className="login-footer">
+              Smart Education • S4P
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="login-icon">
+              🎓
+            </div>
+
+            <div className="login-brand">
+              <h1>S4P</h1>
+              <span>
+                Smart Student Skill & Support Platform
+              </span>
+            </div>
+
+            <div className="login-heading">
+              <h2>
+                {isRegistering
+                  ? "Create Your Account"
+                  : "Welcome Back"}
+              </h2>
+
+              <p>
+                {isRegistering
+                  ? "Join S4P and start building your career roadmap."
+                  : "Track your skills, goals and learning journey."}
+              </p>
+            </div>
+
+            {isRegistering && (
+              <div className="login-field">
+                <label>Username</label>
+
+                <input
+                  type="text"
+                  placeholder="Enter your username"
+                  value={username}
+                  onChange={(e) =>
+                    setUsername(e.target.value)
+                  }
+                />
+              </div>
+            )}
+
+            <div className="login-field">
+              <label>Email</label>
+
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) =>
+                  setEmail(e.target.value)
+                }
+              />
+            </div>
+
+            {isRegistering && role === "student" && (
+              <div className="login-field">
+                <label>Course</label>
+
+                <input
+                  type="text"
+                  placeholder="Enter your course"
+                  value={course}
+                  onChange={(e) =>
+                    setCourse(e.target.value)
+                  }
+                />
+              </div>
+            )}
+
+            <div className="login-field">
+              <label>Password</label>
+
+              <div className="password-wrapper">
+                <input
+                  type={
+                    showPassword
+                      ? "text"
+                      : "password"
+                  }
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) =>
+                    setPassword(e.target.value)
+                  }
+                />
+
+                <button
+                  type="button"
+                  className="password-toggle"
+                  onClick={() =>
+                    setShowPassword(!showPassword)
+                  }
+                >
+                  {showPassword ? "🙈" : "👁️"}
+                </button>
+              </div>
+            </div>
+
+            {!isRegistering && (
+              <div className="login-switch">
+                <button
+                  onClick={() =>
+                    setIsForgotPassword(true)
+                  }
+                >
+                  Forgot Password?
+                </button>
+              </div>
+            )}
+
+            {isRegistering && (
+              <div className="login-field">
+                <label>Account Type</label>
+
+                <select
+                  value={role}
+                  onChange={(e) =>
+                    setRole(e.target.value)
+                  }
+                >
+                  <option value="student">
+                    Student
+                  </option>
+
+                  <option value="teacher">
+                    Faculty / Mentor
+                  </option>
+                </select>
+              </div>
+            )}
+
+            <button
+              className="login-main-button"
+              onClick={
+                isRegistering
+                  ? handleRegister
+                  : handleLogin
               }
             >
-              <option value="student">
-                Student
-              </option>
+              {isRegistering
+                ? "Create Account"
+                : "Login"}
+            </button>
 
-              <option value="teacher">
-                Faculty / Mentor
-              </option>
-            </select>
-          </div>
+            <div className="login-switch">
+              <span>
+                {isRegistering
+                  ? "Already have an account?"
+                  : "Don't have an account?"}
+              </span>
+
+              <button
+                onClick={() =>
+                  setIsRegistering(!isRegistering)
+                }
+              >
+                {isRegistering
+                  ? "Back to Login"
+                  : "Create Account"}
+              </button>
+            </div>
+
+            <div className="login-footer">
+              Smart Education • S4P
+            </div>
+          </>
         )}
-
-        <button
-          className="login-main-button"
-          onClick={
-            isRegistering
-              ? handleRegister
-              : handleLogin
-          }
-        >
-          {isRegistering
-            ? "Create Account"
-            : "Login"}
-        </button>
-
-        <div className="login-switch">
-          <span>
-            {isRegistering
-              ? "Already have an account?"
-              : "Don't have an account?"}
-          </span>
-
-          <button
-            onClick={() =>
-              setIsRegistering(!isRegistering)
-            }
-          >
-            {isRegistering
-              ? "Back to Login"
-              : "Create Account"}
-          </button>
-        </div>
-
-        <div className="login-footer">
-          Smart Education • S4P
-        </div>
 
       </div>
     </div>

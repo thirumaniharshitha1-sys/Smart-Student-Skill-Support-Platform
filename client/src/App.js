@@ -2,8 +2,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
 import Login from "./Login";
+import ResetPassword from "./ResetPassword";
 
 function App() {
+
+
   // =========================
   // STUDENT REGISTRATION DATA
   // =========================
@@ -190,6 +193,15 @@ useEffect(() => {
       .toLowerCase()
       .includes(search.toLowerCase())
   );
+
+// =========================
+// RESET PASSWORD
+// =========================
+if (window.location.pathname.startsWith("/reset-password/")) {
+  return <ResetPassword />;
+}
+
+
 
   // =========================
   // LOGIN SCREEN
