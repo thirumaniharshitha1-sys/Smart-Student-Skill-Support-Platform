@@ -470,8 +470,7 @@ if (window.location.pathname.startsWith("/reset-password/")) {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns:
-            "repeat(auto-fit, minmax(250px, 1fr))",
+         gridTemplateColumns: "repeat(2, 1fr)"
           gap: "20px",
         }}
       >
