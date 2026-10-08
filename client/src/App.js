@@ -386,15 +386,15 @@ if (window.location.pathname.startsWith("/reset-password/")) {
       </div>
 
       {/* Overview Cards */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns:
-            "repeat(auto-fit, minmax(200px, 1fr))",
-          gap: "18px",
-          marginBottom: "35px",
-        }}
-      >
+<div
+  className="overview-cards"
+  style={{
+    display: "grid",
+    gridTemplateColumns: "repeat(3, 1fr)",
+    gap: "18px",
+    marginBottom: "35px",
+  }}
+>
         <div
   style={{
     background: "white",

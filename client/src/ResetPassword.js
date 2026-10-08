@@ -8,36 +8,35 @@ function ResetPassword() {
   const token = window.location.pathname.split("/").pop();
 
   const handleResetPassword = async () => {
-    if (!password || !confirmPassword) {
-      alert("Please fill all fields");
-      return;
-    }
+  if (!password || !confirmPassword) {
+    alert("Please fill all fields");
+    return;
+  }
 
-    if (password !== confirmPassword) {
-      alert("Passwords do not match");
-      return;
-    }
+  if (password !== confirmPassword) {
+    alert("Passwords do not match");
+    return;
+  }
 
-    try {
-      const response = await axios.post(
-        `http://localhost:5000/auth/reset-password/${token}`,
-        {
-          password,
-        }
-      );
+  try {
+    const response = await axios.post(
+      `https://s4p-backend.onrender.com/auth/reset-password/${token}`,
+      {
+        password: password,
+      }
+    );
 
-      alert(response.data.message);
+    alert(response.data.message);
+    window.location.href = "/";
+  } catch (error) {
+    console.log(error);
 
-      window.location.href = "/";
-    } catch (error) {
-      console.log(error);
-
-      alert(
-        error.response?.data?.message ||
-          "Unable to reset password"
-      );
-    }
-  };
+    alert(
+      error.response?.data?.message ||
+        "Unable to reset password"
+    );
+  }
+};
 
   return (
     <div className="login-page">
