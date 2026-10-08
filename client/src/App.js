@@ -49,7 +49,7 @@ const [activePage, setActivePage] = useState("dashboard");
   try {
     if (userRole === "teacher") {
       const response = await axios.get(
-        "http://localhost:5000/students"
+        "https://s4p-backend.onrender.com/students"
       );
 
       setStudents(response.data);
@@ -57,7 +57,7 @@ const [activePage, setActivePage] = useState("dashboard");
       const userEmail = localStorage.getItem("userEmail");
 
       const response = await axios.get(
-        `http://localhost:5000/students/user/${userEmail}`
+        `https://s4p-backend.onrender.com/students/user/${userEmail}`
       );
 
       setStudents([response.data]);
@@ -103,7 +103,7 @@ useEffect(() => {
     try {
       if (isEditing) {
         await axios.put(
-          `http://localhost:5000/students/update/${editingId}`,
+          `https://s4p-backend.onrender.com/students/update/${editingId}`,
           {
             name,
             email,
@@ -129,7 +129,7 @@ useEffect(() => {
         }
 
         await axios.post(
-  "http://localhost:5000/students/add",
+  "https://s4p-backend.onrender.com/students/add",
   {
     name,
     email,
@@ -170,7 +170,7 @@ useEffect(() => {
   const handleDelete = async (id) => {
     try {
       await axios.delete(
-        `http://localhost:5000/students/delete/${id}`
+        `https://s4p-backend.onrender.com/students/delete/${id}`
       );
 
       alert("Student Deleted Successfully!");
@@ -860,7 +860,7 @@ setSkills(updatedSkills);
             onClick={async () => {
               try {
                 await axios.put(
-                  `http://localhost:5000/students/skills/${selectedStudent._id}`,
+                  `https://s4p-backend.onrender.com/students/skills/${selectedStudent._id}`,
                   {
                     skills: skills,
                   }
@@ -968,7 +968,7 @@ setSkills(updatedSkills);
 
     try {
       await axios.put(
-        `http://localhost:5000/students/update/${selectedStudent._id}`,
+        `https://s4p-backend.onrender.com/students/update/${selectedStudent._id}`,
         {
           careerGoal: careerGoal,
         }
@@ -1700,7 +1700,7 @@ if (activePage === "support") {
   onClick={async () => {
     try {
       await axios.put(
-        `http://localhost:5000/students/update/${teacherSelectedStudent._id}`,
+        `https://s4p-backend.onrender.com/students/update/${teacherSelectedStudent._id}`,
         {
           mentorFeedback: mentorFeedback,
           supportStatus: supportStatus,

@@ -19,7 +19,7 @@ function Login({ onLogin }) {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/auth/login",
+        "https://s4p-backend.onrender.com/auth/login",
         {
           email,
           password,
@@ -60,7 +60,7 @@ function Login({ onLogin }) {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/auth/register",
+        "https://s4p-backend.onrender.com/auth/register",
         {
           username,
           email,
